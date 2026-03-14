@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #010101;
+  --foreground: #e0e0e0;
+  --cyan: #00f3ff;
+  --cyan-dim: #00a8b3;
+  --chrome: #c0c0c0;
+  --chrome-dark: #707070;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 20px;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cyan: var(--cyan);
+  --color-cyan-dim: var(--cyan-dim);
+  --color-chrome: var(--chrome);
+  --color-chrome-dark: var(--chrome-dark);
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-space-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--chrome-dark) transparent;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(0, 243, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Glow utilities */
+.glow-cyan {
+  filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.6))
+    drop-shadow(0 0 20px rgba(0, 243, 255, 0.3));
+}
+
+.glow-cyan-strong {
+  filter: drop-shadow(0 0 12px rgba(0, 243, 255, 0.8))
+    drop-shadow(0 0 40px rgba(0, 243, 255, 0.4))
+    drop-shadow(0 0 80px rgba(0, 243, 255, 0.2));
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.6),
+    0 0 30px rgba(0, 243, 255, 0.3);
+}
+
+/* Glassmorphism base */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+/* Blackout overlay */
+.blackout-overlay {
+  mask-image: linear-gradient(to bottom, black, black);
+  -webkit-mask-image: linear-gradient(to bottom, black, black);
+}
+
+/* Canvas containers */
+.canvas-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.canvas-container canvas {
+  display: block;
+}
+
+/* Smooth scroll wrapper */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
